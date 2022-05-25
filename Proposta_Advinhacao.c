@@ -1,4 +1,3 @@
-//O programa não estava reconhecendo o rand(), portanto tive que pesquisar a biblioteca para fazer o algoritmo funcionar.
 #include <stdio.h>
 #include <stdlib.h>
 
