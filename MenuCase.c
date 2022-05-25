@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int contpar,opcao, par, impa, i;
+int contpar,opcao, par, impar, i;
 
 int main()
 {
@@ -23,9 +23,9 @@ int main()
 					}
 					break;
 
-			case 2: for (impa = 1; impa <= 100; impa++) {
-				        if ((impa % 2) != 0) {
-						    printf("o valor %i eh impa\n", impa); 
+			case 2: for (impar = 1; impar <= 100; impar++) {
+				        if ((impar % 2) != 0) {
+						    printf("o valor %i eh impa\n", impar); 
 						}  
 				}
 				break;
