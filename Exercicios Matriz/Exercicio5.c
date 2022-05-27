@@ -1,8 +1,8 @@
 /*Escreva um algoritmo que receba uma matriz B[9][9] de reais e retorna a soma dos elementos das
 linhas pares de B.*/
 #include<stdio.h>
-#define LINHA 10
-#define COLUNA 10
+#define LINHA 9
+#define COLUNA 9
 
 int B[LINHA][COLUNA],soma;
 int i,j;
@@ -15,7 +15,7 @@ int main(){
 			scanf("%d", &B[i][j]);
 		}
 	}
-		for(i=0;i<LINHA;i+=2){
+	for(i=0;i<LINHA;i+=2){
 		for(j=0;j<COLUNA;j++){
 			printf("%d\t", B[i][j]);
 		}
