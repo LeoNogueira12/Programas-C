@@ -23,7 +23,6 @@ int main(){
     scanf("%d",&linhas);
     printf("coloque o tamanho de colunas: ");
     scanf("%d",&colunas);
-   // printf("%d\n", matriz(linhas,colunas));
-   matriz(linhas,colunas);
+    matriz(linhas,colunas);
     return 0;  
 }
