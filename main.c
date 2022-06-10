@@ -23,7 +23,7 @@ int num3,a,b,i,fat;
             printf("A multiplicacao de dos numeros eh: %d", d);
                break;
           case 5:
-          d=(num1**num2);
+          d= pow(num1,num2);
             printf("A potencia de %d na %d eh: %d", num1,num2,d);
                break;
       }
@@ -34,7 +34,6 @@ int num3,a,b,i,fat;
     for(fat = 1; a > 1; a = a - 1){
         fat = fat * a;
     }
-
      return fat;
 }*/
 
@@ -50,7 +49,7 @@ int num3,a,b,i,fat;
 }*/
 
 //modulo exercicio4
-int mediana(char parametro, int n1,int n2, int n3){
+/*float mediana(char parametro, float n1,float n2, float n3){
     int final;
     if(parametro=='a'){
         final=(n1+n2+n3)/3;
@@ -60,13 +59,13 @@ int mediana(char parametro, int n1,int n2, int n3){
         final=3/(1/n1)+(1/n2)+(1/n3);
     }
     return final;
-}
+}*/
 
 
 int main(){
     //exercicio  1
     /*int menu,num1,num2;
-    printf("Bem vindo! qual operacao deseja fazer?\n 1 – para adicao (x+y)\n 2 – para subtracao (x-y)\n 3 – para divisao (x/y)\n 4 – para multiplicacao (x*y)\n 5 – para potencia (xy)\n");
+    printf("Bem vindo! qual operacao deseja fazer?\n 1 â€“ para adicao (x+y)\n 2 â€“ para subtracao (x-y)\n 3 â€“ para divisao (x/y)\n 4 â€“ para multiplicacao (x*y)\n 5 â€“ para potencia (xy)\n");
     scanf("%d", &menu);
     printf("coloque o primeiro numero: ");
     scanf("%d",&num1);
@@ -92,18 +91,22 @@ int main(){
     printf("O seu peso ideal eh: %f ", pesoideal(altura,sexo));*/
 
     //exercicio 4
-    float media,nota1,nota2,nota3;
+    /*float media,nota1,nota2,nota3;
     printf("Coloque a primeira nota: ");
-    scanf("%d",&nota1);
+    scanf("%f",&nota1);
     printf("Coloque a 2 nota: ");
-    scanf("%d",&nota2);
+    scanf("%f",&nota2);
     printf("Coloque a 3 nota: ");
-    scanf("%d",&nota3);
+    scanf("%f",&nota3);
+    getchar();
     char parametro;
     printf("Qual parametro deseja usar? a-media aritmetica,p media ponderada ou h harmonica? ");
     scanf("%c",&parametro);
-    getchar();
-    printf("%d",mediana(parametro,nota1,nota2,nota3));
+    printf("%0.1f",mediana(parametro,nota1,nota2,nota3));*/
+    
+    //exercicio 6
+    
+    
 
 
 
@@ -112,4 +115,3 @@ int main(){
 
     return 0;
 }
-
