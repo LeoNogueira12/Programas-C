@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int num3,a,b,i,fat;
+int num3,a,b,i,fat,taml,tamc;
 //modulo exercicio 1
 /*int calculadora(int menu, int num1,int num2){
     int d;
@@ -61,6 +61,38 @@ int num3,a,b,i,fat;
     return final;
 }*/
 
+//modul ex 6
+/*int ds(int tam){
+    int soma=0,i,n=0,media,a[tam];
+    for(i =0;i<tam;i++){
+        printf("coloque o numero no vetor: ");
+        scanf("%d",&a[i]);
+    }
+    for(i=0;i<tam;i++){
+        if(a[i]%2==0){
+            soma = soma+a[i];
+            n++;
+        }
+    }
+    media=soma/n;
+    return media;
+}*/
+
+
+//modulo exercicio 7
+int ds(int a[taml][tamc]){
+   int i,j,soma=0;
+    for(i=0;i<taml;i++){
+        for(j=0;j<tamc;j++){
+            if(i+j==(taml-1)){
+                soma=a[i][j]+soma;
+            }
+        }
+    }
+    return soma;
+
+}
+
 
 int main(){
     //exercicio  1
@@ -103,12 +135,26 @@ int main(){
     printf("Qual parametro deseja usar? a-media aritmetica,p media ponderada ou h harmonica? ");
     scanf("%c",&parametro);
     printf("%0.1f",mediana(parametro,nota1,nota2,nota3));*/
-    
+
     //exercicio 6
-    
-    
+    /*int tam;
+    printf("Digite o tamanho do vetor: ");
+    scanf("%d", &tam);
+    printf("%d", ds(tam));*/
 
-
+    //exercicio 7
+    printf("Digite quantas linhas: ");
+    scanf("%d", &taml);
+    printf("Digite quantas colunas: ");
+    scanf("%d", &tamc);
+    int i,j,soma=0,a[taml][tamc];
+    for(i=0;i<taml;i++){
+        for(j=0;j<tamc;j++){
+            printf("Coloque o elemento(%d,%d) na matriz: ", i,j);
+            scanf("%d", &a[i][j]);
+        }
+    }
+    printf("%d",ds(a));
 
 
 
