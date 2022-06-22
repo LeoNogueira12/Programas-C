@@ -10,22 +10,31 @@ struct Funcionario{
     char cidade[60];
     float salario;
 };
-void LerDados(struct Funcionario funcionario[TAM]);
-void Imprime(struct Funcionario funcionario[TAM]);
+void lerDados(struct Funcionario funcionario[TAM]);
+void imprime(struct Funcionario funcionario[TAM]);
 
 int main(){
     int menu,i,comp,j,r1,count=0;
     char anome[60];
-    char acidade[60],buscanome[60];
+    char acidade[60],buscanome[60],vetcidade[TAM];
     float asalario;
     int bf,bs,aidade,resultado;
     struct Funcionario funcionario[TAM];
     for(i=0;i<TAM;i++){
-        funcionario[i].idade = -9999999;
+        funcionario[i].idade = -987654321;
         funcionario[i].salario = -999999;
         funcionario[i].cidade[i] = 'n';
+        funcionario[i].cidade[i+1] = 'u';
+        funcionario[i].cidade[i+2] = 'l';
+        funcionario[i].cidade[i+3] = 'l';
         funcionario[i].nome[i] = 'n';
+        funcionario[i].nome[i+1] = 'u';
+        funcionario[i].nome[i+2] = 'l';
+        funcionario[i].nome[i+3] = 'l';
     }
+    funcionario[57].salario=-999999;
+    funcionario[58].salario=-999999;
+    funcionario[59].salario=-999999;
     funcionario[60].salario=-999999;
     funcionario[61].salario=-999999;
     funcionario[62].salario=-999999;
@@ -35,9 +44,9 @@ int main(){
         scanf("%i", &menu);
         switch(menu){
             case 1: //Inserir Funcionario
-				LerDados(funcionario);
+				lerDados(funcionario);
                 break;
-                
+
             case 2: //Atualizar dados do funcionario cadastrados
                 printf("Digite o numero do funcionario a ser atualizado: ");
                 scanf("%d", &bf);
@@ -62,25 +71,31 @@ int main(){
                     }
                 }
                 break;
-                
+
             case 3: //Deletar os dados de um funcionario
                 printf("Digite o numero do funcionario a ser deletado: ");
                 scanf("%d", &bs);
                 for(i=0;i<TAM;i++){
                     if(i==bs){
-                        funcionario[i].idade = -9999999;
+                        funcionario[i].idade = -987654321;
                         funcionario[i].salario = -999999;
                         funcionario[i].cidade[i] = 'n';
+                        funcionario[i].cidade[i+1] = 'u';
+                        funcionario[i].cidade[i+2] = 'l';
+                        funcionario[i].cidade[i+3] = 'l';
                         funcionario[i].nome[i] = 'n';
+                        funcionario[i].nome[i+1] = 'u';
+                        funcionario[i].nome[i+2] = 'l';
+                        funcionario[i].nome[i+3] = 'l';
                     }
                 }
 
                 break;
-                
+
             case 4: //Consultar dados de um funcionario pelo numero
-				Imprime(funcionario);
+				imprime(funcionario);
                 break;
-                
+
             case 5: //Consulta por nome do funcionario
             	printf("Qual funcionario deseja buscar? ");
             	getchar();
@@ -96,7 +111,7 @@ int main(){
 					}
             	}
                 break;
-                
+
             case 6: //Funcionarios com salario maior ou igual a um certo numero
                 printf("Com qual numero deseja comparar o salario? ");
                 scanf("%d", &comp);
@@ -106,7 +121,7 @@ int main(){
                     }
                 }
                 break;
-                
+
             case 7: //Lista de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos
             	for(i=0;i<TAM;i++){
                     if(funcionario[i].salario==1212||funcionario[i].salario<1212 && funcionario[i].salario!=-999999){
@@ -124,13 +139,21 @@ int main(){
                     }
 				}
                 break;
-                
+
             case 8: //Numero de funcionarios por cidade
-            	for(i=0;i<TAM;i++){
-	             printf("Cidade: %s \n", funcionario[i].cidade);
+	        	for(i=0;i<TAM;i++){
+                    for(j=0;j<TAM;j++){
+                        r1=strcmp(funcionario[i].cidade,funcionario[j].cidade);
+                        if(i!=j && r1==0){
+                            strcpy(vetcidade[i],funcionario[i].cidade);
+                            count++;
+                        }
+                    }
 	        	}
+	        	printf("%d",count);
+
                 break;
-                
+
             case 9: //Sair
 				printf("Saindo...");
                 break;
@@ -141,35 +164,38 @@ int main(){
  return 0;
 }
 
-void LerDados(struct Funcionario funcionario[TAM]){
-    int idade,i,f;
+void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
+    int idade,i=0,f,k=0;
     float salario;
     char nome[60],cidade[60];
     printf("Quantos funcionarios deseja cadastrar? ");
     scanf("%d",&f);
     getchar();
-    for(i=0;i<f;i++){
-    	if(funcionario[i].idade == -9999999){
-			printf("--------Funcionario %d---------\n", i);
-	        printf("Coloque o nome: ");
-	        gets(nome);
-	        strcpy(funcionario[i].nome,nome);
-	        printf("Coloque a idade: ");
-	        scanf("%d", &idade);
-	        getchar();
-	        funcionario[i].idade = idade;
-	        printf("Coloque a cidade: ");
-	        gets(cidade);
-	        strcpy(funcionario[i].cidade,cidade);
-	        printf("Coloque o salario: ");
-	        scanf("%f", &salario);
-	        getchar();
-	        funcionario[i].salario = salario;
-		}
-    }
+    do{
+        if(funcionario[i].idade == -987654321){
+            printf("--------Funcionario %d---------\n", i);
+            printf("Coloque o nome: ");
+            gets(nome);
+            strcpy(funcionario[i].nome,nome);
+            printf("Coloque a idade: ");
+            scanf("%d", &idade);
+            getchar();
+            funcionario[i].idade = idade;
+            printf("Coloque a cidade: ");
+            gets(cidade);
+            strcpy(funcionario[i].cidade,cidade);
+            printf("Coloque o salario: ");
+            scanf("%f", &salario);
+            getchar();
+            funcionario[i].salario = salario;
+            k++;
+        }
+        i++;
+    }while(i<TAM&&k<f);
+
     return;
 }
-void Imprime(struct Funcionario funcionario[TAM]){
+void imprime(struct Funcionario funcionario[TAM]){ //impressão de dados
     int i,bf;
     printf("Qual funcionario deseja buscar os dados? ");
     scanf("%d",&bf);
@@ -184,3 +210,4 @@ void Imprime(struct Funcionario funcionario[TAM]){
     }
     return;
 }
+
