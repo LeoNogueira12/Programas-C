@@ -26,7 +26,10 @@ int main(){
         funcionario[i].cidade[i] = 'n';
         funcionario[i].nome[i] = 'n';
     }
-    funcionario[63].salario=-9999999;
+    funcionario[60].salario=-999999;
+    funcionario[61].salario=-999999;
+    funcionario[62].salario=-999999;
+    funcionario[63].salario=-999999;
     do{
         printf("\nBem vindo!\nO que deseja acessar?\n 1-Inserir Funcionario\n2-Atualizar dados do funcionario cadastrados\n3-Deletar os dados de um funcionario\n4-Consultar dados de um funcionario pelo numero\n5-Consulta por nome do funcionario\n6-Funcionarios com salario maior ou igual a um certo numero\n7-Lista de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos\n8-Numero de funcionarios por cidade\n9-Sair.\n");
         scanf("%i", &menu);
@@ -106,7 +109,7 @@ int main(){
                 
             case 7: //Lista de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos
             	for(i=0;i<TAM;i++){
-                    if(funcionario[i].salario==1212||funcionario[i].salario<1212){
+                    if(funcionario[i].salario==1212||funcionario[i].salario<1212 && funcionario[i].salario!=-999999){
                        printf("Funcionario que recebe um salario minimo ou menos: %d\n",i);
                 	}
                 }
@@ -124,13 +127,8 @@ int main(){
                 
             case 8: //Numero de funcionarios por cidade
             	for(i=0;i<TAM;i++){
-            		for(j=0;j<TAM;j++){
-	            		r1=strcmp(funcionario[i].cidade,funcionario[j].cidade);
-						if(r1==0){
-	                       printf("%s",funcionario[i].cidade);
-	                    }
-	            	}
-				}
+	             printf("Cidade: %s \n", funcionario[i].cidade);
+	        	}
                 break;
                 
             case 9: //Sair
@@ -146,7 +144,7 @@ int main(){
 void LerDados(struct Funcionario funcionario[TAM]){
     int idade,i,f;
     float salario;
-    char nome[50],cidade[60];
+    char nome[60],cidade[60];
     printf("Quantos funcionarios deseja cadastrar? ");
     scanf("%d",&f);
     getchar();
