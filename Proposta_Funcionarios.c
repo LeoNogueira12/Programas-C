@@ -15,12 +15,12 @@ void imprime(struct Funcionario funcionario[TAM]);
 int repeticaoCidade(char *f1, char *f2, int k);
 
 int main(){
-    int menu,i,comp,j,r1=0,k=0,count=0;
+    int menu,i,comp,j,r1=0,k=0,count=0,count1=0,r2=0;
     char anome[60];
     char acidade[60],buscanome[60],vetcidade[TAM];
     float asalario;
     int bf,bs,aidade,resultado;
-    struct Funcionario funcionario[TAM];
+    struct Funcionario funcionario[TAM+1];
     for(i=0;i<TAM;i++){
         funcionario[i].idade = -987654321;
         funcionario[i].salario = -999999;
@@ -142,18 +142,19 @@ int main(){
                 break;
 
             case 8: //Numero de funcionarios por cidade
-                strcpy(vetcidade,funcionario[0].cidade);
-	        	for(i=0;i<1;i++){
-                    for(j=i+1;j<TAM;j++){
-                        if(funcionario[i].idade!= -987654321 && funcionario[j].idade!= -987654321){
-                            strcat(funcionario[i].cidade,funcionario[j].cidade);
-                        }
+
+
+                for(j=0;j<TAM;j++){
+                    if(funcionario[j].idade!= -987654321){
+                        strcat(funcionario[101].cidade,funcionario[j].cidade);
                     }
-	        	}
+                }
+
+
 	        	for(i=1;i<TAM;i++){
 	        	    if(funcionario[i].idade != -987654321){
                         do{
-                            r1=repeticaoCidade(funcionario[0].cidade,funcionario[i].cidade,r1);
+                            r1=repeticaoCidade(funcionario[101].cidade,funcionario[i].cidade,r1);
                             if(r1 != -1){
                                 count++;
                             }
@@ -161,6 +162,13 @@ int main(){
                         printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
 	        	    }
 	        	}
+	        	do{
+                    r2=repeticaoCidade(funcionario[101].cidade,funcionario[0].cidade,r2);
+                    if(r2 != -1){
+                        count1++;
+                    }
+                }while(r2!=-1);
+                printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[0].cidade, count1);
                 break;
             case 9: //Sair
 				printf("Saindo...");
