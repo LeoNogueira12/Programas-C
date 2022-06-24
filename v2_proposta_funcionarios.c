@@ -10,23 +10,17 @@ struct Funcionario{
     char cidade[60];
     float salario;
 };
-struct Scidade{
-
-    char cidade[60];
-
-};
 void lerDados(struct Funcionario funcionario[TAM]);
 void imprime(struct Funcionario funcionario[TAM]);
 int repeticaoCidade(char *f1, char *f2, int k);
 
 int main(){
-    int menu,i,comp,j,r1=0,r2=0,k,count=0,count2=0;
+    int menu,i,comp,j,r1=0,k=0,count=0,count1=0,r2=0;
     char anome[60];
     char acidade[60],buscanome[60],vetcidade[TAM];
     float asalario;
     int bf,bs,aidade,resultado;
-    struct Funcionario funcionario[TAM];
-    struct Scidade scidade[TAM];
+    struct Funcionario funcionario[TAM+1];
     for(i=0;i<TAM;i++){
         funcionario[i].idade = -987654321;
         funcionario[i].salario = -999999;
@@ -148,43 +142,33 @@ int main(){
                 break;
 
             case 8: //Numero de funcionarios por cidade
-                strcpy(vetcidade,funcionario[0].cidade);
-                for(i=0;i<TAM;i++){
-                    strcpy(scidade[i].cidade,funcionario[i].cidade);
-                }
-                for(i=0;i<1;i++){
-                    for(j=i+1;j<TAM;j++){
-                        if(funcionario[i].idade!= -987654321 && funcionario[j].idade!= -987654321){
-                            strcat(funcionario[i].cidade,funcionario[j].cidade);
-                        }
+
+
+                for(j=0;j<TAM;j++){
+                    if(funcionario[j].idade!= -987654321){
+                        strcat(funcionario[101].cidade,funcionario[j].cidade);
                     }
-	        	}
+                }
+
+
 	        	for(i=1;i<TAM;i++){
 	        	    if(funcionario[i].idade != -987654321){
                         do{
-                            r1=repeticaoCidade(funcionario[0].cidade,funcionario[i].cidade,r1);
+                            r1=repeticaoCidade(funcionario[101].cidade,funcionario[i].cidade,r1);
                             if(r1 != -1){
                                 count++;
                             }
                         }while(r1!=-1);
-                        //testar valores menores de i para ver se ter alguma cidade igual
-                        //so vai acontecer o print se "todos as cidades antes de i"==k forem != da cidade de i
-                        
-                        for(j=1;j=i;j++){
-                            strcat(scidade[0].cidade,scidade[j].cidade);
-                        }
-                        
-                        do{
-                            r2=repeticaoCidade(scidade[0].cidade,funcionario[i].cidade,r2);
-                            if(r2 != -1){
-                                count2++;
-                            }
-                        }while(r2!=-1);
-                        if(count2 == 1){
-                            printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
-                        }
+                        printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
 	        	    }
 	        	}
+	        	do{
+                    r2=repeticaoCidade(funcionario[101].cidade,funcionario[0].cidade,r2);
+                    if(r2 != -1){
+                        count1++;
+                    }
+                }while(r2!=-1);
+                printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[0].cidade, count1);
                 break;
             case 9: //Sair
 				printf("Saindo...");
@@ -197,7 +181,7 @@ int main(){
 }
 
 void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
-    int idade,i=0,f,k=0;
+    int idade,i=0,f,k=0,dia,mes,ano;
     float salario;
     char nome[60],cidade[60];
     printf("Quantos funcionarios deseja cadastrar? ");
@@ -209,6 +193,12 @@ void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
             printf("Coloque o nome: ");
             gets(nome);
             strcpy(funcionario[i].nome,nome);
+            printf("Coloque a sua data de aniversario(dia): ");
+            scanf("%d", &dia);
+            printf("Coloque a sua data de aniversario(mes): ");
+            scanf("%d", &mes);
+            printf("Coloque a sua data de aniversario(ano): ");
+            scanf("%d", &ano);
             printf("Coloque a idade: ");
             scanf("%d", &idade);
             getchar();
