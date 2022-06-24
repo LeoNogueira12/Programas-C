@@ -141,17 +141,16 @@ int main(){
                 break;
 
             case 8: //Numero de funcionarios por cidade
-	        	for(i=0;i<TAM;i++){
-                    for(j=0;j<TAM;j++){
-                        r1=strcmp(funcionario[i].cidade,funcionario[j].cidade);
-                        if(i!=j && r1==0){
-                            strcpy(vetcidade[i],funcionario[i].cidade);
-                            count++;
+	        	for(i=0;i<1;i++){
+                    for(j=i+1;j<TAM;j++){
+                        if(funcionario[i].idade!= -987654321 && funcionario[j].idade!= -987654321){
+                            strcat(funcionario[i].cidade,funcionario[j].cidade);
+                            //printf("%s\n", funcionario[i].cidade);
+
                         }
                     }
 	        	}
-	        	printf("%d",count);
-
+	        	printf("%s\n",funcionario[0].cidade);
                 break;
 
             case 9: //Sair
@@ -210,4 +209,3 @@ void imprime(struct Funcionario funcionario[TAM]){ //impressão de dados
     }
     return;
 }
-
