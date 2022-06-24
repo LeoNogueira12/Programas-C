@@ -150,18 +150,17 @@ int main(){
                         }
                     }
 	        	}
-
-
-                do{
-                    if(funcionario[1].idade != -987654321){
-                        r1=repeticaoCidade(funcionario[0].cidade,funcionario[1].cidade,r1);
-                        if(r1 != -1){
-                            count++;
-                        }
-                    }
-                }while(r1!=-1);
-                printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[1].cidade, count);
-
+	        	for(i=1;i<TAM;i++){
+	        	    if(funcionario[i].idade != -987654321){
+                        do{
+                            r1=repeticaoCidade(funcionario[0].cidade,funcionario[i].cidade,r1);
+                            if(r1 != -1){
+                                count++;
+                            }
+                        }while(r1!=-1);
+                        printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
+	        	    }
+	        	}
                 break;
             case 9: //Sair
 				printf("Saindo...");
@@ -233,4 +232,3 @@ int repeticaoCidade(char *f1,char *f2, int k){
     }
     return -1;
 }
-
