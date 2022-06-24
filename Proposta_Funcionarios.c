@@ -12,9 +12,10 @@ struct Funcionario{
 };
 void lerDados(struct Funcionario funcionario[TAM]);
 void imprime(struct Funcionario funcionario[TAM]);
+int repeticaoCidade(char *f1, char *f2, int k);
 
 int main(){
-    int menu,i,comp,j,r1,count=0;
+    int menu,i,comp,j,r1=0,k=0,count=0;
     char anome[60];
     char acidade[60],buscanome[60],vetcidade[TAM];
     float asalario;
@@ -141,18 +142,30 @@ int main(){
                 break;
 
             case 8: //Numero de funcionarios por cidade
+                strcpy(vetcidade,funcionario[0].cidade);
 	        	for(i=0;i<1;i++){
                     for(j=i+1;j<TAM;j++){
                         if(funcionario[i].idade!= -987654321 && funcionario[j].idade!= -987654321){
                             strcat(funcionario[i].cidade,funcionario[j].cidade);
-                            //printf("%s\n", funcionario[i].cidade);
-
                         }
                     }
 	        	}
-	        	printf("%s\n",funcionario[0].cidade);
-                break;
+	        	//printf("%d\n",repeticaoCidade(funcionario[0].cidade,funcionario[1].cidade));
 
+                do{
+                    if(funcionario[1].idade != -987654321){
+                        r1=repeticaoCidade(funcionario[0].cidade,funcionario[1].cidade,r1);
+                        printf("Retorno: %d\n", r1);
+                        printf("%s\n", funcionario[0].cidade);
+                        printf("%s\n", funcionario[1].cidade);
+                        if(r1 != -1){
+                            count++;
+                        }
+                    }
+                    printf("Quantidade: %d\n", count);
+                }while(r1!=-1);
+
+                break;
             case 9: //Sair
 				printf("Saindo...");
                 break;
@@ -208,4 +221,18 @@ void imprime(struct Funcionario funcionario[TAM]){ //impressão de dados
         }
     }
     return;
+}
+int repeticaoCidade(char *f1,char *f2, int k){
+    int i,j=0;
+    for(i=k;i<strlen(f1);i++){
+        if(f1[i] == f2[j]){
+            j++;
+        }else{
+            j=0;
+        }
+        if(j==strlen(f2)){
+            return i;
+        }
+    }
+    return -1;
 }
