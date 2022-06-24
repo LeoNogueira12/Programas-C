@@ -150,20 +150,17 @@ int main(){
                         }
                     }
 	        	}
-	        	//printf("%d\n",repeticaoCidade(funcionario[0].cidade,funcionario[1].cidade));
+
 
                 do{
                     if(funcionario[1].idade != -987654321){
                         r1=repeticaoCidade(funcionario[0].cidade,funcionario[1].cidade,r1);
-                        printf("Retorno: %d\n", r1);
-                        printf("%s\n", funcionario[0].cidade);
-                        printf("%s\n", funcionario[1].cidade);
                         if(r1 != -1){
                             count++;
                         }
                     }
-                    printf("Quantidade: %d\n", count);
                 }while(r1!=-1);
+                printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[1].cidade, count);
 
                 break;
             case 9: //Sair
@@ -236,3 +233,4 @@ int repeticaoCidade(char *f1,char *f2, int k){
     }
     return -1;
 }
+
