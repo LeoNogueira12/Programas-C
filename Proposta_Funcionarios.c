@@ -173,7 +173,7 @@ int main(){
 }
 
 void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
-    int idade,i=0,f,k=0;
+    int idade,i=0,f,k=0,dia,mes,ano;
     float salario;
     char nome[60],cidade[60];
     printf("Quantos funcionarios deseja cadastrar? ");
@@ -185,6 +185,12 @@ void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
             printf("Coloque o nome: ");
             gets(nome);
             strcpy(funcionario[i].nome,nome);
+            printf("Coloque a sua data de aniversario(dia): ");
+            scanf("%d", &dia);
+            printf("Coloque a sua data de aniversario(mes): ");
+            scanf("%d", &mes);
+            printf("Coloque a sua data de aniversario(ano): ");
+            scanf("%d", &ano);
             printf("Coloque a idade: ");
             scanf("%d", &idade);
             getchar();
