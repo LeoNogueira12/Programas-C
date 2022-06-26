@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TAM 100
+#define TAM 101
 
 struct Funcionario{
 
@@ -11,16 +11,20 @@ struct Funcionario{
     float salario;
 };
 void lerDados(struct Funcionario funcionario[TAM]);
-void imprime(struct Funcionario funcionario[TAM]);
+void atualizacaoDados(struct Funcionario funcionario[TAM],int bf);
+void deletarFuncionario(struct Funcionario funcionario[TAM],int bs);
+void mostraDados(struct Funcionario funcionario[TAM],int bf);
+void buscaNome(struct Funcionario funcionario[TAM], char buscanome[60]);
+void listaSalario(struct Funcionario funcionario[TAM]);
+void funcionariosCidade(struct Funcionario funcionario[TAM]);
 int repeticaoCidade(char *f1, char *f2, int k);
 
 int main(){
-    int menu,i,comp,j,r1=0,k=0,count=0,count1=0,r2=0;
-    char anome[60];
-    char acidade[60],buscanome[60],vetcidade[TAM];
-    float asalario;
-    int bf,bs,aidade,resultado;
-    struct Funcionario funcionario[TAM+1];
+    int menu,i,comp;
+    char buscanome[60],vetcidade[TAM];
+    int bf,bs;
+    
+    struct Funcionario funcionario[TAM];
     for(i=0;i<TAM;i++){
         funcionario[i].idade = -987654321;
         funcionario[i].salario = -999999;
@@ -52,65 +56,28 @@ int main(){
                 printf("Digite o numero do funcionario a ser atualizado: ");
                 scanf("%d", &bf);
                 getchar();
-                for(i=0;i<TAM;i++){
-                    if(i==bf){
-                        printf("--------Funcionario %d---------\n", i);
-                        printf("Coloque o nome: ");
-                        gets(anome);
-                        strcpy(funcionario[i].nome,anome);
-                        printf("Coloque a idade: ");
-                        scanf("%d", &aidade);
-                        getchar();
-                        funcionario[i].idade = aidade;
-                        printf("Coloque a cidade: ");
-                        gets(acidade);
-                        strcpy(funcionario[i].cidade,acidade);
-                        printf("Coloque o salario: ");
-                        scanf("%f", &asalario);
-                        getchar();
-                        funcionario[i].salario = asalario;
-                    }
-                }
+                atualizacaoDados(funcionario,bf);
                 break;
 
             case 3: //Deletar os dados de um funcionario
                 printf("Digite o numero do funcionario a ser deletado: ");
                 scanf("%d", &bs);
-                for(i=0;i<TAM;i++){
-                    if(i==bs){
-                        funcionario[i].idade = -987654321;
-                        funcionario[i].salario = -999999;
-                        funcionario[i].cidade[i] = 'n';
-                        funcionario[i].cidade[i+1] = 'u';
-                        funcionario[i].cidade[i+2] = 'l';
-                        funcionario[i].cidade[i+3] = 'l';
-                        funcionario[i].nome[i] = 'n';
-                        funcionario[i].nome[i+1] = 'u';
-                        funcionario[i].nome[i+2] = 'l';
-                        funcionario[i].nome[i+3] = 'l';
-                    }
-                }
+				deletarFuncionario(funcionario,bs);
 
                 break;
 
             case 4: //Consultar dados de um funcionario pelo numero
-				imprime(funcionario);
+            	printf("Qual funcionario deseja buscar os dados? ");
+    			scanf("%d",&bf);
+				mostraDados(funcionario,bf);
                 break;
 
             case 5: //Consulta por nome do funcionario
             	printf("Qual funcionario deseja buscar? ");
             	getchar();
             	gets(buscanome);
-            	for (i=0;i<TAM;i++){
-            		resultado = strcmp (funcionario[i].nome,buscanome);
-            		if(resultado==0){
-            			printf("----- Dados do Funcionario-------\n");
-            			printf("Nome: %s \n", funcionario[i].nome);
-            			printf("idade: %d \n", funcionario[i].idade);
-            			printf("Salario aproximado: %.2f \n", funcionario[i].salario);
-            			printf("Cidade: %s \n", funcionario[i].cidade);
-					}
-            	}
+            	buscaNome(funcionario,buscanome);
+            	
                 break;
 
             case 6: //Funcionarios com salario maior ou igual a um certo numero
@@ -118,57 +85,19 @@ int main(){
                 scanf("%d", &comp);
                 for(i=0;i<TAM;i++){
                     if(funcionario[i].salario==comp||funcionario[i].salario>comp){
-                       printf("Funcionario: %d\n",i);
+                       printf("Funcionario: %s\n",funcionario[i].nome);
                     }
                 }
                 break;
 
             case 7: //Lista de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos
-            	for(i=0;i<TAM;i++){
-                    if(funcionario[i].salario==1212||funcionario[i].salario<1212 && funcionario[i].salario!=-999999){
-                       printf("Funcionario que recebe um salario minimo ou menos: %d\n",i);
-                	}
-                }
-                for(i=0;i<TAM;i++){
-                	if(funcionario[i].salario>1212 && funcionario[i].salario<(3*1212)||funcionario[i].salario==(3*1212)){
-                       printf("Funcionario que recebe mais de salario minimo ate tres: %d\n",i);
-                    }
-				}
-				for(i=0;i<TAM;i++){
-					if(funcionario[i].salario>(3*1212)){
-                       printf("Funcionario que recebe mais de tres salarios minimos: %d\n",i);
-                    }
-				}
+            	listaSalario(funcionario);
+            
                 break;
 
             case 8: //Numero de funcionarios por cidade
+				funcionariosCidade(funcionario);
 
-
-                for(j=0;j<TAM;j++){
-                    if(funcionario[j].idade!= -987654321){
-                        strcat(funcionario[101].cidade,funcionario[j].cidade);
-                    }
-                }
-
-
-	        	for(i=1;i<TAM;i++){
-	        	    if(funcionario[i].idade != -987654321){
-                        do{
-                            r1=repeticaoCidade(funcionario[101].cidade,funcionario[i].cidade,r1);
-                            if(r1 != -1){
-                                count++;
-                            }
-                        }while(r1!=-1);
-                        printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
-	        	    }
-	        	}
-	        	do{
-                    r2=repeticaoCidade(funcionario[101].cidade,funcionario[0].cidade,r2);
-                    if(r2 != -1){
-                        count1++;
-                    }
-                }while(r2!=-1);
-                printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[0].cidade, count1);
                 break;
             case 9: //Sair
 				printf("Saindo...");
@@ -181,7 +110,7 @@ int main(){
 }
 
 void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
-    int idade,i=0,f,k=0,dia,mes,ano;
+    int idade,i=0,f,k=0,data,ano;
     float salario;
     char nome[60],cidade[60];
     printf("Quantos funcionarios deseja cadastrar? ");
@@ -193,16 +122,12 @@ void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
             printf("Coloque o nome: ");
             gets(nome);
             strcpy(funcionario[i].nome,nome);
-            printf("Coloque a sua data de aniversario(dia): ");
-            scanf("%d", &dia);
-            printf("Coloque a sua data de aniversario(mes): ");
-            scanf("%d", &mes);
-            printf("Coloque a sua data de aniversario(ano): ");
+            printf("Coloque a sua data de aniversario (dd/mm): ");
+            scanf("%d", &data);
+            printf("Coloque a sua data de aniversario (ano): ");
             scanf("%d", &ano);
-            printf("Coloque a idade: ");
-            scanf("%d", &idade);
             getchar();
-            funcionario[i].idade = idade;
+            funcionario[i].idade = 2022-ano;
             printf("Coloque a cidade: ");
             gets(cidade);
             strcpy(funcionario[i].cidade,cidade);
@@ -217,10 +142,52 @@ void lerDados(struct Funcionario funcionario[TAM]){ //Leitura de dados
 
     return;
 }
-void imprime(struct Funcionario funcionario[TAM]){ //impressão de dados
-    int i,bf;
-    printf("Qual funcionario deseja buscar os dados? ");
-    scanf("%d",&bf);
+void atualizacaoDados(struct  Funcionario funcionario[TAM],int bf){
+	int i,aidade;
+	char anome[60],acidade[60];
+	float asalario;
+	for(i=0;i<TAM;i++){
+        if(i==bf){
+            printf("--------Funcionario %d---------\n", i);
+            printf("Coloque o nome: ");
+            gets(anome);
+            strcpy(funcionario[i].nome,anome);
+            printf("Coloque a idade: ");
+            scanf("%d", &aidade);
+            getchar();
+            funcionario[i].idade = aidade;
+            printf("Coloque a cidade: ");
+            gets(acidade);
+            strcpy(funcionario[i].cidade,acidade);
+            printf("Coloque o salario: ");
+            scanf("%f", &asalario);
+            getchar();
+            funcionario[i].salario = asalario;
+        }
+    }
+                return;
+}
+void deletarFuncionario(struct Funcionario funcionario[TAM],int bs){ //deleta o funcionario
+	int i;
+	for(i=0;i<TAM;i++){
+        if(i==bs){
+            funcionario[i].idade = -987654321;
+            funcionario[i].salario = -999999;
+            funcionario[i].cidade[i] = 'n';
+            funcionario[i].cidade[i+1] = 'u';
+            funcionario[i].cidade[i+2] = 'l';
+            funcionario[i].cidade[i+3] = 'l';
+            funcionario[i].nome[i] = 'n';
+            funcionario[i].nome[i+1] = 'u';
+            funcionario[i].nome[i+2] = 'l';
+            funcionario[i].nome[i+3] = 'l';
+        }
+    }
+	return;
+	
+}
+void mostraDados(struct Funcionario funcionario[TAM],int bf){ //impressão de dados
+    int i;
     for(i=0;i<TAM;i++){
         if(i==bf){
             printf("----- Dados do Funcionario-------\n");
@@ -231,6 +198,66 @@ void imprime(struct Funcionario funcionario[TAM]){ //impressão de dados
         }
     }
     return;
+}
+void buscaNome(struct Funcionario funcionario[TAM], char buscanome[60]){//busca de dados por nome
+	int i;
+	for (i=0;i<TAM;i++){
+        if(strcmp(funcionario[i].nome,buscanome)==0){
+           	printf("----- Dados do Funcionario-------\n");
+           	printf("Nome: %s \n", funcionario[i].nome);
+           	printf("idade: %d \n", funcionario[i].idade);
+           	printf("Salario aproximado: %.2f \n", funcionario[i].salario);
+           	printf("Cidade: %s \n", funcionario[i].cidade);
+		}
+   	}
+   	return;
+}
+void listaSalario(struct Funcionario funcionario[TAM]){
+	int i;
+	for(i=0;i<TAM;i++){
+        if(funcionario[i].salario==1212||funcionario[i].salario<1212 && funcionario[i].salario!=-999999){
+         printf("Funcionario que recebe um salario minimo ou menos: %s\n",funcionario[i].nome);
+        }
+    }
+    for(i=0;i<TAM;i++){
+        if(funcionario[i].salario>1212 && funcionario[i].salario<(3*1212)||funcionario[i].salario==(3*1212)){
+            printf("Funcionario que recebe mais de salario minimo ate tres: %s\n",funcionario[i].nome);
+        }
+	}
+	for(i=0;i<TAM;i++){
+		if(funcionario[i].salario>(3*1212)){
+            printf("Funcionario que recebe mais de tres salarios minimos: %s\n",funcionario[i].nome);
+        }
+	}
+	return;
+}
+void funcionariosCidade(struct Funcionario funcionario[TAM]){
+	int i,count=0,count1=0,r1=0,r2=0,j;
+	for(j=0;j<TAM;j++){
+        if(funcionario[j].idade!= -987654321){
+            strcat(funcionario[101].cidade,funcionario[j].cidade);
+        }
+	}
+
+	for(i=1;i<TAM;i++){
+	    if(funcionario[i].idade != -987654321){
+            do{
+                r1=repeticaoCidade(funcionario[101].cidade,funcionario[i].cidade,r1);
+                if(r1 != -1){
+                	count++;
+                }
+            }while(r1!=-1);
+            printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[i].cidade, count);
+	    }
+	}
+	do{
+        r2=repeticaoCidade(funcionario[101].cidade,funcionario[0].cidade,r2);
+        if(r2 != -1){
+        	count1++;
+        }
+    }while(r2!=-1);
+    printf("Quantidade de funcionarios na cidade %s: %d\n",funcionario[0].cidade, count1);	
+	return;
 }
 int repeticaoCidade(char *f1,char *f2, int k){
     int i,j=0;
