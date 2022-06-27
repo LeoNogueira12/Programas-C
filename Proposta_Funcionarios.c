@@ -167,7 +167,7 @@ void atualizacaoDados(struct  Funcionario funcionario[TAM],int bf){
             funcionario[i].salario = asalario;
         }
     }
-                return;
+	return;
 }
 void deletarFuncionario(struct Funcionario funcionario[TAM],int bs){ //deleta o funcionario
 	int i;
