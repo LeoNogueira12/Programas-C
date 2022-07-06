@@ -1,0 +1,128 @@
+//Lista Encadeada, Ligada
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//cria o tipo string
+typedef char string[30];
+
+struct dados{
+    string nome;
+    string endereco;
+    int idade;
+    struct dados *prox;
+};
+
+//define tipo dados para a struct
+typedef struct dados dados;
+
+//Prototipos das funções auxiliares
+int menu();
+dados *insereItem();
+void mostraLista();
+dados *localizaNome(string nome, dados *lista);
+void dadosPessoa(dados *p);
+
+int main(){
+    dados *lista = NULL, *aux;
+    int opcao;
+    string nome;
+
+    do{
+        opcao = menu();
+
+        switch(opcao){
+            case 1://Verifica se a lista esta vazia e insere elementos no inicio da lista
+                    if(lista == NULL){
+                        aux = insereItem();
+                        if(aux!=lista){
+                            lista = aux;
+                        }
+                    }else{
+                        //Se não estiver vazia
+                        aux = lista;
+                        lista = insereItem();
+                        lista->prox = aux;
+                    }
+                    break;
+            case 2:
+                    mostraLista(lista);
+                    break;
+            case 3:
+                    getchar();
+                    printf("Qual nome deseja buscar? : ");
+                    fgets(nome,30,stdin);
+                    aux = localizaNome(nome,lista);
+                    if(aux != NULL){
+                        dadosPessoa(aux);
+                    }else{
+                        printf("Pessoa nao encontrada!\n");
+                    }
+                    break;
+            case 4: free(lista);
+        }
+
+    }while(opcao != 4);
+
+    return 0;
+}
+
+int menu(){
+    int opcao;
+    printf("1.Inserir dados.\n");
+    printf("2.Mostrar lista.\n");
+    printf("3.Pesquisa por nome.\n");
+    printf("4.Sair.\n");
+    printf("O que deseja fazer? \n");
+    scanf("%d", &opcao);
+    return opcao;
+}
+
+dados *insereItem(){
+    dados *item;
+
+    //Aloca item dinamicamente
+    item = (dados*)malloc(sizeof(dados));
+
+    getchar();
+    printf("Insira o nome: ");
+    fgets(item->nome, 30, stdin);
+    printf("Insira o endereco: ");
+    fgets(item->endereco,30,stdin);
+    printf("Insira a idade: ");
+    scanf("%d", &item->idade);
+    //Aterra o ponteiro
+    item->prox = NULL;
+
+    return item;
+}
+
+void mostraLista(const dados * lista){
+    dados *aux = lista;
+    while(aux!=NULL){
+        dadosPessoa(aux);
+        aux = aux->prox;
+    }
+}
+
+dados *localizaNome(string nome, dados *lista){
+    dados *aux = lista;
+
+    while(aux!=NULL){
+        if(strcmp(nome, aux->nome)==0){
+            return aux;
+        }
+        aux = aux->prox;
+    }
+    return NULL;
+}
+
+void dadosPessoa(dados *p){
+    dados *aux = p;
+    printf("Nome da pessoa: %s", aux->nome);
+    printf("Endereco da pessoa: %s", aux->endereco);
+    printf("Idade da pessoa: %d\n", aux->idade);
+    printf("----------------------------\n");
+    aux = aux->prox;
+}
+
