@@ -19,7 +19,7 @@ typedef struct Times{
 int menu();
 void mostraLista(dados_t *lista);
 dados_t *criaRegistro();
-void insereLista(dados_t *lista, dados_t *novo_registro,int posicao);
+void insereLista(dados_t **lista, dados_t *novo_registro,int posicao);
 void removeEnter(string s);
 
 int main(){
@@ -29,7 +29,7 @@ int main(){
         opcao = menu();
         switch(opcao){
             case 1:
-                insereLista(lista,criaRegistro(),INICIO);
+                insereLista(&lista,criaRegistro(),INICIO);
                 break;
             case 2:
                 mostraLista(lista);
@@ -72,9 +72,10 @@ void mostraLista(dados_t *lista){
     dados_t *aux = lista;
     while(aux!=NULL){
         printf("************************************\n");
-        printf("Nome: %s\n",aux->nome);
-        printf("ID: %d\n", aux->id);
-        printf("Endereco do prox %p",aux->prox);
+        printf("Nome :%s\n",aux->nome);
+        printf("ID   :%d\n", aux->id);
+        printf("Endereco do prox     :%p\n",aux->prox);
+        printf("Endereco de registro :%p\n",aux);
         printf("************************************\n");
         aux = aux->prox;
 
@@ -98,27 +99,28 @@ dados_t *criaRegistro(){
     return novo;
 }
 
-void insereLista(dados_t *lista,dados_t *novo_registro,int posicao){
+void insereLista(dados_t **lista,dados_t *novo_registro,int posicao){
     dados_t *aux = NULL;
 
-    if(lista){
+    if(*lista){
         switch(posicao){
             case INICIO:
-                aux = lista;
-                lista = novo_registro;
+                aux = *lista;
+                *lista = novo_registro;
                 novo_registro->prox = aux;
                 break;
             case FIM:
                 //Procura o último
-                aux = lista;
+                aux = *lista;
                 while(aux->prox != NULL){
                     aux = aux->prox;
                 }
                 aux->prox = novo_registro;
+
                 break;
         }
     }else{
-        lista = novo_registro;
+        *lista = novo_registro;
     }
 }
 
