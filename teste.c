@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define SAIR 6
 typedef char string[60];
 
 struct dados{
@@ -9,69 +10,94 @@ struct dados{
     float media;
 }aluno[4];
 
-aluno *buscaNome(string nome);
-void alteraDados(aluno nome);
+int menu();
+void alteraDados(string altera);
 
 int main()
 {
     FILE *f;
-    int i;
+    int i,opcao;
+    string nome_aux;
 
-    f=fopen("dados_aluno","wb");
+    do{
+        opcao = menu();
+        switch(opcao){
+            case 1:
+                for (i=0;i<5; i++){
+                    getchar();
+                    printf("Nome: ");
+                    fgets(aluno[i].nome,60,stdin);
+                    printf("Media: ");
+                    scanf("%f",&aluno[i].media);
+                    printf("\n");
+                }
+                break;
+            case 2:
+                f=fopen("dados_aluno","wb");
 
-    if (!f){
-        return 1;
-    }
-    printf("Pressione Enter para continuar.....\n");
-    for (i=0;i<5; i++){
-        getchar();
-        printf("Nome: ");
-        fgets(aluno[i].nome,60,stdin);
-        printf("Media: ");
-        scanf("%f",&aluno[i].media);
-        fwrite(&aluno[i],sizeof(aluno),1,f);
-    }
-    fclose(f);
+                if (!f){
+                    return 1;
+                }
+                for (i=0;i<5; i++){
+                    fwrite(&aluno[i],sizeof(aluno),1,f);
+                }
+                fclose(f);
+                break;
+            case 3:
+                f=fopen("dados_aluno","rb");
+                if (!f)
+                    return 1;
 
-    printf("-----Lendo os 5 registros----------\n");
-    f=fopen("dados_aluno","rb");
-    if (!f)
-        return 1;
-
-    for (i=0;i<5; i++){
-        fread(&aluno[i],sizeof(aluno),1,f);
-        printf("\n.....................................................\n");
-        printf("Nome do aluno......:%s\n",aluno[i].nome);
-        printf("Media arredondada:..%f\n",aluno[i].media);
-        printf("\n.....................................................\n");
-    }
-    fclose(f);
-    printf("\n");
-
-    system("pause");
+                for (i=0;i<5; i++){
+                    fread(&aluno[i],sizeof(aluno),1,f);
+                    printf("\n.....................................................\n");
+                    printf("Nome do aluno......:%s\n",aluno[i].nome);
+                    printf("Media arredondada:..%f\n",aluno[i].media);
+                    printf("\n.....................................................\n");
+                }
+                fclose(f);
+                break;
+            case 4:
+                break;
+            case 5:
+                printf("Qual aluno deseja alterar? ");
+                getchar();
+                fgets(nome_aux,60,stdin);
+                alteraDados(nome_aux);
+                printf("Dados alterados!\n");
+                break;
+            case SAIR:
+                break;
+        }
+    }while(opcao != SAIR);
 
     return 0;
 }
 
 int menu(){
     int opcao;
-    printf("1.Adicionar 5 alunos");
-    printf("2.Exportar para binario")
 
+    printf("1.Registrar 5 alunos\n");
+    printf("2.Exportar para binario todos os registros\n");
+    printf("3.Importar do arquivo binario todos os registros.\n");
+    printf("4.Importar apenas um registro.\n");
+    printf("5.Alterar dados\n");
+    printf("%d.Sair\n",SAIR);
+    printf("Opcao: ");
+    scanf("%d",&opcao);
+    printf("\n");
+
+    return opcao;
 }
 
-aluno *buscaNome(string nome){
+void alteraDados(string altera){
     int i;
     for(i=0;i<5;i++){
-        if(strcmp(nome,aluno[i].nome)==0){
-            return aluno[i];
+        if(strcmp(altera,aluno[i].nome)==0){
+            printf("Novo nome: ");
+            fgets(aluno[i].nome,60,stdin);
+            printf("Nova media: ");
+            scanf("%f", &aluno[i].media);
         }
     }
-    return NULL;
-}
-void alteraDados(aluno altera){
-    printf("Novo nome: ");
-    fgets(altera.nome,60,stdin);
-    printf("Nova media: ");
-    scanf("%f", &altera.media);
 }
