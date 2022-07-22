@@ -9,12 +9,14 @@ struct dados{
     float media;
 }aluno[4];
 
+aluno *buscaNome(string nome);
+void alteraDados(aluno nome);
+
 int main()
 {
     FILE *f;
     int i;
 
-    printf("Criando arquivo com 5 registros \n");
     f=fopen("dados_aluno","wb");
 
     if (!f){
@@ -49,4 +51,27 @@ int main()
     system("pause");
 
     return 0;
+}
+
+int menu(){
+    int opcao;
+    printf("1.Adicionar 5 alunos");
+    printf("2.Exportar para binario")
+
+}
+
+aluno *buscaNome(string nome){
+    int i;
+    for(i=0;i<5;i++){
+        if(strcmp(nome,aluno[i].nome)==0){
+            return aluno[i];
+        }
+    }
+    return NULL;
+}
+void alteraDados(aluno altera){
+    printf("Novo nome: ");
+    fgets(altera.nome,60,stdin);
+    printf("Nova media: ");
+    scanf("%f", &altera.media);
 }
