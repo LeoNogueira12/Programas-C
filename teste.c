@@ -32,6 +32,7 @@ int main()
                     printf("\n");
                 }
                 break;
+
             case 2:
                 f=fopen("dados_aluno","wb");
 
@@ -42,7 +43,9 @@ int main()
                     fwrite(&aluno[i],sizeof(aluno),1,f);
                 }
                 fclose(f);
+                printf("Dados Exportados!\n");
                 break;
+
             case 3:
                 f=fopen("dados_aluno","rb");
                 if (!f)
@@ -57,6 +60,7 @@ int main()
                 }
                 fclose(f);
                 break;
+
             case 4:
                 break;
             case 5:
