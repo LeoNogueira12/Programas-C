@@ -47,6 +47,9 @@ int main()
                 break;
 
             case 3:
+                break;
+
+            case 4:
                 f=fopen("dados_aluno","rb");
                 if (!f)
                     return 1;
@@ -61,8 +64,6 @@ int main()
                 fclose(f);
                 break;
 
-            case 4:
-                break;
             case 5:
                 printf("Qual aluno deseja alterar? ");
                 getchar();
@@ -81,12 +82,12 @@ int main()
 int menu(){
     int opcao;
 
-    printf("1.Registrar 5 alunos\n");
-    printf("2.Exportar para binario todos os registros\n");
-    printf("3.Importar do arquivo binario todos os registros.\n");
-    printf("4.Importar apenas um registro.\n");
-    printf("5.Alterar dados\n");
-    printf("%d.Sair\n",SAIR);
+    printf("1.Registrar 5 alunos.\n");
+    printf("2.Exportar para binario todos os registros.\n");
+    printf("3.Importar do arquivo binario registro por registro.\n");
+    printf("4.Importar todos os registro.\n");
+    printf("5.Alterar dados.\n");
+    printf("%d.Sair.\n",SAIR);
     printf("Opcao: ");
     scanf("%d",&opcao);
     printf("\n");
@@ -98,8 +99,6 @@ void alteraDados(string altera){
     int i;
     for(i=0;i<5;i++){
         if(strcmp(altera,aluno[i].nome)==0){
-            printf("Novo nome: ");
-            fgets(aluno[i].nome,60,stdin);
             printf("Nova media: ");
             scanf("%f", &aluno[i].media);
         }
