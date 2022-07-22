@@ -23,6 +23,7 @@ int main()
         opcao = menu();
         switch(opcao){
             case 1:
+                //Entrada de dados dos 5 alunos
                 for (i=0;i<5; i++){
                     getchar();
                     printf("Nome: ");
@@ -34,26 +35,37 @@ int main()
                 break;
 
             case 2:
+                //Abre o arquivo bin no modo para escrever
                 f=fopen("dados_aluno","wb");
 
+                //testa se ele existe
                 if (!f){
                     return 1;
                 }
+
+                //Escreve os dados no arquivo bin
                 for (i=0;i<5; i++){
                     fwrite(&aluno[i],sizeof(aluno),1,f);
                 }
+
+                //Fecha o arquivo
                 fclose(f);
                 printf("Dados Exportados!\n");
                 break;
 
             case 3:
+                f=open("dados_aluno")
                 break;
 
             case 4:
+                //Abre o arquivo bin no modo de leitura
                 f=fopen("dados_aluno","rb");
+
+                //Verifica se ele existe
                 if (!f)
                     return 1;
 
+                //Exporta os dados em blocos do arquivo
                 for (i=0;i<5; i++){
                     fread(&aluno[i],sizeof(aluno),1,f);
                     printf("\n.....................................................\n");
@@ -86,7 +98,7 @@ int menu(){
     printf("2.Exportar para binario todos os registros.\n");
     printf("3.Importar do arquivo binario registro por registro.\n");
     printf("4.Importar todos os registro.\n");
-    printf("5.Alterar dados.\n");
+    printf("5.Alterar a media de um aluno.\n");
     printf("%d.Sair.\n",SAIR);
     printf("Opcao: ");
     scanf("%d",&opcao);
@@ -97,8 +109,10 @@ int menu(){
 
 void alteraDados(string altera){
     int i;
+    //Procura qual aluno ele quer alterar
     for(i=0;i<5;i++){
         if(strcmp(altera,aluno[i].nome)==0){
+            //Altera a média
             printf("Nova media: ");
             scanf("%f", &aluno[i].media);
         }
