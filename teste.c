@@ -20,8 +20,9 @@ int main()
     if (!f){
         return 1;
     }
-
+    printf("Pressione Enter para continuar.....\n");
     for (i=0;i<5; i++){
+        getchar();
         printf("Nome: ");
         fgets(aluno[i].nome,60,stdin);
         printf("Media: ");
@@ -37,8 +38,10 @@ int main()
 
     for (i=0;i<5; i++){
         fread(&aluno[i],sizeof(aluno),1,f);
-        printf("%s\n",aluno[i].nome);
-        printf("%f\n",aluno[i].media);
+        printf("\n.....................................................\n");
+        printf("Nome do aluno......:%s\n",aluno[i].nome);
+        printf("Media arredondada:..%f\n",aluno[i].media);
+        printf("\n.....................................................\n");
     }
     fclose(f);
     printf("\n");
