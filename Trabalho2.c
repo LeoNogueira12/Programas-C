@@ -7,6 +7,8 @@
 #define INICIO  1
 #define FIM		2
 
+int quantidade_lista=0;
+
 typedef char string[QTD_STR];
 
 typedef struct Funcionario{
@@ -42,7 +44,7 @@ int main(){
     dados_t *lista = NULL,*aux_deleta=NULL,*f_removido=NULL,*aux_busca=NULL;
     int opcao_menu,num_compara;
     char resposta,resposta2;
-    printf("Ola, gostaria de importar os dados do arquivo binario: dados_funcionarios.bin? (y/n)");
+    printf("Ola, gostaria de importar os dados do arquivo binario: dados_funcionarios.bin? (y/n): ");
     scanf("%c", &resposta);
     if(resposta == 'y'){
     	importaBinario(&lista);
@@ -126,7 +128,7 @@ int main(){
 				break;
 				
             case SAIR: //Sair
-            	printf("Deseja exportar os arquivos para bin? (y/n)");
+            	printf("Deseja exportar os arquivos para bin? (y/n): ");
             	getchar();
             	scanf("%c", &resposta2);
             	if(resposta2 == 'y'){
@@ -156,7 +158,7 @@ int menu(){
     printf("4 - Relatorio de todos os funcionarios.\n");
     printf("5 - Consulta de funcionario por nome.\n");
     printf("6 - Numero de funcionarios com salario maior ou igual a um certo numero.\n");
-    printf("7 - Numero de funcionarios que ganham 1 salário minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos.\n");
+    printf("7 - Numero de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos.\n");
     printf("8 - Numero de funcionarios por cidade.\n");
     printf("9 - Exportar para arquivo txt.\n");
     printf("10- Importar dados de arquivo txt,\n");
@@ -208,6 +210,7 @@ void colocaLista(dados_t **lista,dados_t *novo,int local_insercao){
 	}else{
 		*lista = novo;
 	}
+	quantidade_lista++;
 }
 
 void alteraDados(dados_t **lista,string nome){
@@ -262,7 +265,7 @@ void mostraLista(dados_t *lista){
 		printf("Nome do funcionario...:%s", aux->nome);
 		printf("Idade do funcionario..:%d\n",aux->idade);
 		printf("Salario do funcionario:%2.f\n",aux->salario);
-		printf("Cidade do funcionario.:%s\n",aux->cidade);
+		printf("Cidade do funcionario.:%s",aux->cidade);
 		printf("**************************************************************\n");
 		aux = aux->prox;
 	}
@@ -325,44 +328,33 @@ void dadosFuncionario(dados_t *funcionario){
 	aux = aux->prox;
 }
 
+
 void funcionariosCidade(dados_t *lista){
-	dados_t *aux = lista;
-	int count=0,r1=0;
-	char stringcat[255];
+	dados_t *aux = lista;	
+	string cidade[100];
+	int i = 0,j,count =0;
 	
-	while(aux->prox!=NULL){
-		strcat(stringcat,aux->cidade);
+	do{
+		
+		strcpy(cidade[i],aux->cidade);
 		aux = aux->prox;
+		i++;
+		
+	}while(aux!=NULL && i<quantidade_lista);
+	
+	for(i=0;i<quantidade_lista;i++){
+		for(j=0;j<quantidade_lista;j++){
+			if(strcmp(cidade[i],cidade[j])==0){
+				count++;
+			}
+		}
+		if(cidade[i]){
+			removeEnter(cidade[i]);
+			printf("Quantidade de funcionarios na cidade %s : %d\n",cidade[i],count);
+		}
+		count = 0;
 	}
-
-	while(aux->prox != NULL){
-	    
-        do{
-            r1=repeticaoCidade(stringcat,aux->cidade,r1);
-            if(r1 != -1){
-                count++;
-            }
-        }while(r1!=-1);
-            
-        printf("Quantidade de funcionarios na cidade %s: %d\n",&aux->cidade, count);
-		aux = aux->prox;
-	}
-	return;
-}
-
-int repeticaoCidade(char *f1,char *f2, int k){
-    int i,j=0;
-    for(i=k;i<strlen(f1);i++){
-        if(f1[i] == f2[j]){
-            j++;
-        }else{
-            j=0;
-        }
-        if(j==strlen(f2)){
-            return i;
-        }
-    }
-    return -1;
+	
 }
 
 void exportaTxt(dados_t *lista){
@@ -389,31 +381,24 @@ void importaTxt(dados_t *lista){
 	float salario;
 		
 	arquivo = fopen("dados_funcionarios.txt", "r");
-		
-	if (arquivo == NULL) {
-		printf("Erro ao tentar abrir arquivo dados_funcionarios.txt");
-		exit(0);
-	}
 	
 	while (!feof(arquivo)) {
-		fscanf(arquivo,"%s", &nome);
-		fscanf(arquivo,"%d\n", &idade);
-		fscanf(arquivo,"%f\n", &salario);
-		fscanf(arquivo,"%s\n\n", &cidade);
+		fscanf(arquivo, "%s", &nome);
+		fscanf(arquivo, "%d\n", &idade);
+		fscanf(arquivo, "%f\n", &salario);
+		fscanf(arquivo, "%s\n\n", &cidade);
 		if (!feof(arquivo)) {
-			aux = (dados_t*)malloc(sizeof(dados_t));
-			strcpy(aux->nome,nome);
-			aux->idade = idade;
-			aux->salario = salario;
-			strcpy(aux->cidade,cidade);
-			aux->prox = NULL;
-			colocaLista(&lista, aux,INICIO);
-		}
+		  	aux = (dados_t*)malloc(sizeof(dados_t));
+		  	strcpy(aux->nome,nome);
+		  	strcpy(aux->cidade,cidade);
+		  	aux->idade = idade;
+		  	aux->salario = salario;
+		  	aux->prox = NULL;
+		  	colocaLista(&lista, aux, FIM);
+	  	}
 	}
-		
-	
 	fclose(arquivo);
-}
+}	
 
 void removeEnter(string s){
 	int tamanho;
