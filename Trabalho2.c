@@ -161,7 +161,7 @@ int menu(){
     printf("7 - Numero de funcionarios que ganham 1 salario minimo ou menos, mais de 1 salario minimo a 3 salarios minimos e mais que 3 salarios minimos.\n");
     printf("8 - Numero de funcionarios por cidade.\n");
     printf("9 - Exportar para arquivo txt.\n");
-    printf("10- Importar dados de arquivo txt,\n");
+    printf("10- Importar dados de arquivo txt.\n");
     printf("%d - Sair.\n", SAIR);
     printf("Opcao: ");
     scanf("%d", &opcao);
@@ -262,10 +262,10 @@ void mostraLista(dados_t *lista){
 	aux = lista;
 	while(aux!= NULL){
 		printf("**************************************************************\n");
-		printf("Nome do funcionario...:%s", aux->nome);
+		printf("Nome do funcionario...:%s\n", aux->nome);
 		printf("Idade do funcionario..:%d\n",aux->idade);
 		printf("Salario do funcionario:%2.f\n",aux->salario);
-		printf("Cidade do funcionario.:%s",aux->cidade);
+		printf("Cidade do funcionario.:%s\n",aux->cidade);
 		printf("**************************************************************\n");
 		aux = aux->prox;
 	}
@@ -331,7 +331,6 @@ void dadosFuncionario(dados_t *funcionario){
 	aux = aux->prox;
 }
 
-
 void funcionariosCidade(dados_t *lista){
 	dados_t *aux = lista;	
 	string cidade[100];
@@ -365,18 +364,28 @@ void funcionariosCidade(dados_t *lista){
 }
 
 void exportaTxt(dados_t *lista){
-	dados_t *aux =lista;
+	dados_t *aux =lista,*aux2;
 	FILE* arquivo;
 	
-	arquivo = fopen("dados_funcionarios.txt", "w+");
-	
+	arquivo = fopen("dados_funcionarios.txt", "a+");
+
 	while(aux!=NULL){
-		fprintf(arquivo,"%s",aux->nome);
+		fprintf(arquivo,"%s\n",aux->nome);
 		fprintf(arquivo,"%d\n",aux->idade);
 		fprintf(arquivo,"%.2f\n",aux->salario);
 		fprintf(arquivo,"%s\n\n",aux->cidade);
 		aux = aux->prox;
 	}
+	
+	aux2->nome[0] = 'n';
+	fprintf(arquivo,"%s\n",aux2->nome);
+	aux2->idade = 0;
+	fprintf(arquivo,"%d\n",aux2->idade);
+	aux2->salario = 0;
+	fprintf(arquivo,"%.2f\n",aux2->salario);
+	aux2->cidade[0] = 'n';
+	fprintf(arquivo,"%s\n\n",aux2->cidade);
+	
 	fclose(arquivo);
 }
 
@@ -390,7 +399,7 @@ void importaTxt(dados_t **lista){
 	arquivo = fopen("dados_funcionarios.txt", "r");
 	
 	while (!feof(arquivo)) {
-		fscanf(arquivo, "%s", &nome);
+		fscanf(arquivo, "%s\n", &nome);
 		fscanf(arquivo, "%d\n", &idade);
 		fscanf(arquivo, "%f\n", &salario);
 		fscanf(arquivo, "%s\n\n", &cidade);
@@ -423,7 +432,7 @@ void importaBinario(dados_t **lista){
 	fp = fopen("dados_funcionarios.bin", "rb");
 	
 	if (fp == NULL) {
-		printf("Erro ao tentar abrir arquivo <dados.bin>");
+		printf("Erro ao tentar abrir arquivo dados_funcionarios.bin");
 		exit(0);
 	}
 
@@ -450,10 +459,10 @@ void exportaBinario(dados_t *lista){
 	FILE *fp;
 	dados_t *aux = lista;
 	
-	fp = fopen("dados_funcionarios.bin", "wb+");
+	fp = fopen("dados_funcionarios.bin", "ab+");
 	
 	if (fp == NULL) {
-		printf("Erro ao tentar abrir arquivo <dados.bin>");
+		printf("Erro ao tentar abrir arquivo dados_funcionarios.bin");
 		exit(0);
 	}
 	
