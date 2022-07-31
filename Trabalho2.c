@@ -70,6 +70,7 @@ int main(){
 				printf("Qual funcionario deseja alterar? ");
 				getchar();
 				fgets(nome_altera,QTD_STR,stdin);
+				removeEnter(nome_altera);
 				alteraDados(&lista,nome_altera);
 				printf("Dados alterados!\n");
 				break;
@@ -78,6 +79,7 @@ int main(){
 				printf("Qual funcionario deseja deletar? ");
             	getchar();
 				fgets(nome_deleta,QTD_STR,stdin);
+				removeEnter(nome_deleta);
 				aux_deleta = localizaNome(nome_deleta,lista);
 				f_removido = deletaDados(&lista,aux_deleta);
 				if(f_removido){
@@ -94,6 +96,7 @@ int main(){
 				getchar();
                 printf("Qual nome deseja buscar? : ");
                 fgets(nome_busca,QTD_STR,stdin);
+                removeEnter(nome_busca);
                 aux_busca = localizaNome(nome_busca,lista);
                 if(aux_busca != NULL){
                 	dadosFuncionario(aux_busca);
@@ -177,6 +180,7 @@ dados_t *cadastroFuncionario(){
 	printf("Nome do funcionario: ");
 	getchar();
 	fgets(novo->nome,QTD_STR,stdin);
+	removeEnter(novo->nome);
 	printf("Idade do funcionario: ");
 	scanf("%d", &novo->idade);
 	printf("Salario do funcionario: ");
@@ -184,6 +188,7 @@ dados_t *cadastroFuncionario(){
 	printf("Cidade do funcionario: ");
 	getchar();
 	fgets(novo->cidade,QTD_STR,stdin);
+	removeEnter(novo->cidade);
 	novo->prox = NULL;
 	
 	return novo;
@@ -221,6 +226,7 @@ void alteraDados(dados_t **lista,string nome){
 			if(strcmp(aux->nome,nome)==0){
 				printf("Nome do funcionario: ");
 				fgets(aux->nome,QTD_STR,stdin);
+				removeEnter(aux->nome);
 				printf("Idade do funcionario: ");
 				scanf("%d", &aux->idade);
 				printf("Salario do funcionario: ");
@@ -228,6 +234,7 @@ void alteraDados(dados_t **lista,string nome){
 				printf("Cidade do funcionario: ");
 				getchar();
 				fgets(aux->cidade,QTD_STR,stdin);
+				removeEnter(aux->cidade);
 				return;
 			}else{
 				aux = aux->prox;
@@ -323,7 +330,7 @@ void dadosFuncionario(dados_t *funcionario){
 	dados_t *aux = funcionario;
 	
 	printf("**************************************************************\n");
-	printf("Nome do funcionario...:%s", aux->nome);
+	printf("Nome do funcionario...:%s\n", aux->nome);
 	printf("Idade do funcionario..:%d\n",aux->idade);
 	printf("Salario do funcionario:%2.f\n",aux->salario);
 	printf("Cidade do funcionario.:%s\n",aux->cidade);
@@ -352,7 +359,6 @@ void funcionariosCidade(dados_t *lista){
 				}
 			}
 			if(cidade[i]){
-				removeEnter(cidade[i]);
 				printf("Quantidade de funcionarios na cidade %s : %d\n",cidade[i],count);
 			}
 			count = 0;
@@ -459,7 +465,7 @@ void exportaBinario(dados_t *lista){
 	FILE *fp;
 	dados_t *aux = lista;
 	
-	fp = fopen("dados_funcionarios.bin", "ab+");
+	fp = fopen("dados_funcionarios.bin", "wb+");
 	
 	if (fp == NULL) {
 		printf("Erro ao tentar abrir arquivo dados_funcionarios.bin");
