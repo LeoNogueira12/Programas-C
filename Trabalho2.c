@@ -34,7 +34,7 @@ void dadosFuncionario(dados_t *funcionario);
 void funcionariosCidade(dados_t *lista);
 int repeticaoCidade(char *f1,char *f2, int k);
 void exportaTxt(dados_t *lista);
-void importaTxt(dados_t *lista);
+void importaTxt(dados_t **lista);
 void removeEnter(string s);
 void importaBinario(dados_t **lista);
 void exportaBinario(dados_t *lista);
@@ -123,7 +123,7 @@ int main(){
 				break;
 				
 			case 10:	      
-				importaTxt(lista);
+				importaTxt(&lista);
 				printf("Dados importados!\n");
 				break;
 				
@@ -269,6 +269,9 @@ void mostraLista(dados_t *lista){
 		printf("**************************************************************\n");
 		aux = aux->prox;
 	}
+	if(lista == NULL){
+		printf("Nao existem funcionarios na lista!\n");
+	}
 }
 
 dados_t *localizaNome(string nome, dados_t *lista){
@@ -334,27 +337,31 @@ void funcionariosCidade(dados_t *lista){
 	string cidade[100];
 	int i = 0,j,count =0;
 	
-	do{
+	if(lista){
+		do{
 		
-		strcpy(cidade[i],aux->cidade);
-		aux = aux->prox;
-		i++;
+			strcpy(cidade[i],aux->cidade);
+			aux = aux->prox;
+			i++;
 		
-	}while(aux!=NULL && i<quantidade_lista);
-	
-	for(i=0;i<quantidade_lista;i++){
-		for(j=0;j<quantidade_lista;j++){
-			if(strcmp(cidade[i],cidade[j])==0){
-				count++;
+		}while(aux!=NULL && i<quantidade_lista);
+		
+		for(i=0;i<quantidade_lista;i++){
+			for(j=0;j<quantidade_lista;j++){
+				if(strcmp(cidade[i],cidade[j])==0){
+					count++;
+				}
 			}
+			if(cidade[i]){
+				removeEnter(cidade[i]);
+				printf("Quantidade de funcionarios na cidade %s : %d\n",cidade[i],count);
+			}
+			count = 0;
 		}
-		if(cidade[i]){
-			removeEnter(cidade[i]);
-			printf("Quantidade de funcionarios na cidade %s : %d\n",cidade[i],count);
-		}
-		count = 0;
+		
+	}else{
+		printf("Nao existem funcionarios na lista!\n");
 	}
-	
 }
 
 void exportaTxt(dados_t *lista){
@@ -373,7 +380,7 @@ void exportaTxt(dados_t *lista){
 	fclose(arquivo);
 }
 
-void importaTxt(dados_t *lista){
+void importaTxt(dados_t **lista){
 	dados_t *aux;
 	FILE *arquivo;
 	string nome,cidade;
@@ -394,7 +401,7 @@ void importaTxt(dados_t *lista){
 		  	aux->idade = idade;
 		  	aux->salario = salario;
 		  	aux->prox = NULL;
-		  	colocaLista(&lista, aux, FIM);
+		  	colocaLista(lista, aux, FIM);
 	  	}
 	}
 	fclose(arquivo);
